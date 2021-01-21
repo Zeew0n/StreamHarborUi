@@ -21,7 +21,7 @@ export class UsersManagementComponent implements OnInit{
   title = [];
   city = [];
   state = [];
-  private userList: UserListModel[];
+  userList: UserListModel[];
 
   // Constructor
   constructor(
@@ -46,6 +46,7 @@ export class UsersManagementComponent implements OnInit{
     this.userListService.getAllUsers().subscribe(
       (res: Array<UserListModel>) => {
         this.userList = res;
+        console.log(this.userList)
       },
       error => {
         this.toastr.error(error.error.errormessage !== undefined ?
