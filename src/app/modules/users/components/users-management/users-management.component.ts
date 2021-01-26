@@ -8,7 +8,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { UserListModel } from 'src/app/models/user/user-list.model';
-import { UserListService } from 'src/app/modules/user-account/services/userList.service';
+import { UserListService } from '../../services/userList.service';
 
 @Component({
   selector: 'app-users-management',
