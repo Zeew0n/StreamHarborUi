@@ -11,10 +11,11 @@ import { UserListModel } from 'src/app/models/user/user-list.model';
     providedIn: 'root'
 })
 export class UserListService{
-    constructor(private httpClient: HttpClient) { 
+    constructor(private httpClient: HttpClient) {
     }
 
     getAllUsers(): Observable<Array<UserListModel>> {
+        console.log("Namaste");
         return this.httpClient.get<Array<UserListModel>>('user/get');
       }
 
