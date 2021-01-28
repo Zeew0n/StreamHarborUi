@@ -16,6 +16,8 @@ export default class AuthenticationService extends HttpGenericCrudService<AppUse
     baseUrl = environment.API_URL;
     private readonly JWT_TOKEN = 'auth_token';
     private readonly Ref_TOKEN = 'refresh_token';
+    private readonly Ref_ROLE = 'user_role';
+    private readonly Ref_TENANTID = 'tenant_id';
 
     private _authNavStatusSource = new BehaviorSubject<boolean>(false);
     authNavStatus$ = this._authNavStatusSource.asObservable();
@@ -37,12 +39,11 @@ export default class AuthenticationService extends HttpGenericCrudService<AppUse
         return tokenPayload;
     }
 
-    checkPermission(tokenPayload, permission: string): boolean {
-        if (tokenPayload.admin) {
+    checkPermission(user): boolean {
+        if (user=="User") {
             return true;
         } else {
-            const permissions = JSON.parse(tokenPayload.permissions);
-            return permissions.includes(permission);
+           false;
         }
     }
     login(data) {
@@ -56,6 +57,17 @@ export default class AuthenticationService extends HttpGenericCrudService<AppUse
     getJwtToken() {
         return localStorage.getItem(this.JWT_TOKEN);
     }
+
+
+    getUserRole() {
+        return localStorage.getItem(this.Ref_ROLE);
+    }
+
+    getTenantId() {
+        return localStorage.getItem(this.Ref_TENANTID);
+    }
+
+
 
     getRefreshToken() {
         return localStorage.getItem(this.Ref_TOKEN);

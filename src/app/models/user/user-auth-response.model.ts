@@ -8,5 +8,8 @@ export class UserAuthResponseModel {
     role: string;
     isVerified: boolean;
     jwToken: string;
+    roleName: string;
+    isSuperAdmin: boolean;
     refreshToken: string;
+    tenantId:string;
 }

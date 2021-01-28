@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import AuthenticationService from '../../services/authentication.service';
 import { UserAuthResponseModel } from '../../../../models/user/user-auth-response.model';
+import { Console } from 'console';
 
 @Component({
     selector: 'app-login',
@@ -55,8 +56,11 @@ export class LoginComponent implements OnInit {
           (res: UserAuthResponseModel) => {
               localStorage.clear();
               localStorage.setItem('auth_token', res.jwToken);
+              localStorage.setItem('role_name', res.roleName)
               localStorage.setItem('refresh_token', res.refreshToken);
+              localStorage.setItem('tenant_id', res.tenantId);
               this.toastr.success('Login Successful.', 'Success!');
+              console.log(res);
               this.router.navigateByUrl('home');
           },
           error => {

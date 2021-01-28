@@ -9,7 +9,8 @@ export class InternalCompanyModel extends BaseEntity {
   confirmEmail: string;
   phoneNumber: string;
   roleId: string;
-  roleName: string;
+  role: string;
+  status: string;
   tenantId: string;
   organizationName:string;
   password: string;
