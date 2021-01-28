@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-top-nav',
@@ -7,8 +8,9 @@ import { Component } from '@angular/core';
 })
 
 export class TopNavComponent {
-    constructor() {
-    }
+    constructor(
+      private router: Router,
+    ) {}
 
     onLogOut() {
       this.clearLocalStorage();
@@ -16,6 +18,6 @@ export class TopNavComponent {
 
     private  clearLocalStorage() {
         localStorage.clear();
-        location.reload();
+        this.router.navigate(['/']);
       }
 }

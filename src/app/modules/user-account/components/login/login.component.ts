@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
     /* Model Declarations*/
 
     /* Other Declarations */
-    isSubmitting: boolean; //Form submission variable
-    closeResult = ''; //close result for modal
+    isSubmitting: boolean; // Form submission variable
+    closeResult = ''; // close result for modal
     loginCheck: boolean;
 
 
@@ -49,8 +49,9 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+        // tslint:disable-next-line: no-debugger
         debugger;
-       if (this.loginForm.valid) {
+        if (this.loginForm.valid) {
         this.authenticationService.login(this.loginForm.value).subscribe(
           (res: UserAuthResponseModel) => {
               localStorage.clear();
@@ -76,8 +77,8 @@ export class LoginComponent implements OnInit {
       }
 
     checkPasswords(form: FormGroup) { // here we have the 'passwords' group
-        let pass = form.value.password;
-        let confirmPass = form.value.confirmPassword;
-        return pass === confirmPass ? null : { notSame: true }
+        const pass = form.value.password;
+        const confirmPass = form.value.confirmPassword;
+        return pass === confirmPass ? null : { notSame: true };
     }
 }
