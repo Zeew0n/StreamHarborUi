@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpGenericCrudService } from '../../../services/http-generic-crud.service';
 import { InternalCompanyModel } from '../../../models/internal-company.model';
 import { Observable } from 'rxjs';
+import { RoleModel } from 'src/app/models/role.model';
 
 
 @Injectable({
@@ -32,8 +33,15 @@ export class InternalCompanyService extends HttpGenericCrudService<InternalCompa
     }
 
 
+    GetAllRoles(): Observable<RoleModel[]> {
+        return this.httpClient.get<RoleModel[]>('Role/Listrole');
+    }
+
+
+
+
     GetUserById(id): Observable<InternalCompanyModel> {
-        return this.httpClient.get<InternalCompanyModel>('user/InternalcompanyId?InternalCompanyId=' + id);
+        return this.httpClient.get<InternalCompanyModel>('user/UserId?UserId=' + id);
     }
 
 

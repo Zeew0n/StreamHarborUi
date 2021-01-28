@@ -51,6 +51,12 @@ export const routes: Routes = [
             },
 
             {
+                path: 'tenant-management',
+                loadChildren: () => import('./modules/tenant/tenant.module').then(m => m.TenantModule),
+                canActivate: [AuthGuard]
+            },
+
+            {
                 path: 'membership',
                 loadChildren: () => import('./modules/membership/membership.module').then(m => m.Membership),
                 canActivate: [AuthGuard]

@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="title-container">
+    <h1 class="page-title">Tenants</h1>
+    <div class="btn-holder">
+      <button type="button" class="btn btn-primary pull-right" (click)="open(content)">
+        Add Tenant
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="tab-container_margin">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+
+              <th scope="col">Organization Email</th>
+              <th scope="col">Organization Subdomain</th>
+              <th scope="col">Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tenant of tenants">
+
+              <td scope="col" data-th="IsActive ">{{tenant.organizationEmail}}</td>
+              <td data-th="UpdateDate ">{{tenant.subDomain}}</td>
+              <td data-th="CreateDate ">{{tenant.organizationName}}</td>
+              <td data-th="Actions">
+                <a (click)="EditData(content, tenant)" class="icon-holder" href="javascript:void(0)" title="edit"><i
+                    class="icon icon-pencil-create"></i></a>
+                <span>|</span>
+                <a class="icon-holder" ref="javascript:void(0)" title="delete"><i
+                    class="icon icon-circle-block"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ng-template #content let-modal>
+        <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<form class="form-streamharbor" [formGroup]="UserForm" (ngSubmit)="onSubmit()">
+
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Users</h4>
+        
+      </div>
+      <div class="modal-body">
+       
+          <div class="form-group">
+
+            <label for="tname">Tenant Name: </label>
+            <input type="text" formControlName="organizationName" class="form-control" placeholder="Tenant Name">
+          </div>
+
+          <div class="form-group">
+
+            <label for="oname">Organization Email: </label>
+            <input type="text" formControlName="organizationEmail" class="form-control" placeholder="Organization Name">
+          </div>
+
+          <div class="form-group">
+
+            <label for="lname">Subdomain: </label>
+            <input type="text" formControlName="subDomain" class="form-control" placeholder="Subdomain">
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+         <button type="submit" class="btn btn-primary">{{EventValue}}</button>
+         <button type="button" class="btn btn-info" (click)="modal.close('Close Button Clicked')">
+          <i class="fa fa-times"></i> Cancel
+        </button>
+      </div>
+    </form>
+
+    </ng-template>
+  </div>
+</div>

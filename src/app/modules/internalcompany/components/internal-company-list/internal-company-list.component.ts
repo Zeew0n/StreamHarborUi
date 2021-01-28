@@ -10,6 +10,9 @@ import { EMPTY } from 'rxjs';
 import AuthenticationService from '../../../user-account/services/authentication.service';
 import { Permission } from '../../../../constants/permission';
 import { create } from 'domain';
+import { RoleModel } from 'src/app/models/role.model';
+import { TenantModel } from 'src/app/models/tenant/tenant.model';
+import { TenantService } from 'src/app/modules/tenant/services/tenant.service';
 @Component({
     selector: 'app-internal-company-list',
     templateUrl: './internal-company-list.component.html',
@@ -18,20 +21,32 @@ import { create } from 'domain';
 export class InternalCompanyListComponent {
     company: InternalCompanyModel = new InternalCompanyModel();
     companies: InternalCompanyModel[];
+    roles: RoleModel[];
+    tenants: TenantModel[];
     isSubmitting: boolean; // Form submission variable
     closeResult = ''; // close result for modal
     submitted = false;
     userId: string = '';
-    isEdit: boolean = true;
+    isEdit: boolean = false;
     selectedSimpleItem = 'User';
     websiteList: any = ['User', 'Admin']
     simpleItems = [];
+    isUpdate=false;
+    selectCompany;
+
+
+    
+    //roleId: string='';
+   // roleName: string='';
+
+
 
     constructor(
         private fb: FormBuilder,
         private  modalService: NgbModal,
         private toastr: ToastrService,
         private internalCompanyService: InternalCompanyService,
+        private tenantService:TenantService,
         private authService: AuthenticationService,
         private route: ActivatedRoute) {
          }
@@ -41,21 +56,26 @@ export class InternalCompanyListComponent {
         //isActive: boolean;
         //updatedDate: Date;
         //createdDate: Date;
-        userName = new FormControl('', [Validators.required]);
+
+
+        userName = new FormControl();
         firstName = new FormControl('', [Validators.required]);
         lastName = new FormControl('', [Validators.required]);
-        email = new FormControl('', [Validators.required]);
-        confirmEmail = new FormControl('', [Validators.required]);
+        email = new FormControl();
+        confirmEmail = new FormControl();
         phoneNumber = new FormControl('', [Validators.required]);
-        password = new FormControl('', [Validators.required]);
-        confirmPassword= new FormControl('', [Validators.required]);
-        roleName = new FormControl(true, [Validators.required]);
+        password = new FormControl();
+        confirmPassword= new FormControl();
+        roleId = new FormControl(true, [Validators.required]);
+        tenantId= new FormControl();
 
       ngOnInit()
      {
         this.getIC();
         this.initializeCompanyForm();
-        this.simpleItems = ['User', 'Admin'];
+        this.getRoles();
+        this.getTenants();
+        //this.simpleItems = ['User', 'Admin'];
     }
 
     
@@ -67,6 +87,19 @@ export class InternalCompanyListComponent {
         }, error => console.error);
     }
     
+
+    getRoles() {
+      this.internalCompanyService.GetAllRoles().subscribe(result => {
+          this.roles = result;
+      }, error => console.error);
+  }
+
+  getTenants() {
+    this.tenantService.GetAllTenants().subscribe(result => {
+        this.tenants = result;
+    }, error => console.error);
+}
+
         initializeCompanyForm() {
         this.UserForm = new FormGroup({
            // userId: this.userId,
@@ -78,13 +111,24 @@ export class InternalCompanyListComponent {
             phoneNumber : this.phoneNumber,
             password : this.password,
             confirmPassword:this.confirmPassword,
-            roleName : this.roleName,
+            roleId : this.roleId,
+            tenantId: this.tenantId,
         });
     }
 
     changeWebsite(e) {
       console.log(e.target.value);
     }
+
+
+    changerole(e) {
+      console.log(e.target.value);
+    }
+    
+    changetenant(e) {
+      console.log(e.target.value);
+    }
+
 
     Delete(id)
     {
@@ -113,6 +157,7 @@ export class InternalCompanyListComponent {
     }
 
     open(content) {
+      this.isUpdate = false;
      this.resetFrom();
      this.isEdit = false;
      this.userId = '';
@@ -124,8 +169,9 @@ export class InternalCompanyListComponent {
     debugger;
 
     const createForm = this.UserForm.value;
+    console.log(createForm)
 
-        if (this.userId === '') {
+        if (!this.isUpdate) {
 
           if (this.UserForm.valid)
           {
@@ -138,7 +184,8 @@ export class InternalCompanyListComponent {
                 model.confirmEmail= createForm.confirmEmail;
                 model.password= createForm.password;
                 model.confirmPassword= createForm.confirmPassword;
-                model.roleName= createForm.roleName;
+                model.roleId= createForm.roleId;
+                model.tenantId= createForm.tenantId;
                 model.phoneNumber= createForm.phoneNumber;
 
                 this.internalCompanyService.CreateUser(model).subscribe(
@@ -162,16 +209,17 @@ export class InternalCompanyListComponent {
                   {
                     const model = new InternalCompanyModel();
                     debugger;
-                        model.userName= createForm.userName;
+                        //model.userName= createForm.userName;
                         model.firstName= createForm.firstName;
                         model.lastName= createForm.lastName;
-                        model.email= createForm.email;
-                        model.confirmEmail= createForm.confirmEmail;
-                        model.password= createForm.password;
-                        model.confirmPassword= createForm.confirmPassword;
-                        model.roleName= createForm.roleName;
+                       // model.email= createForm.email;
+                       // model.confirmEmail= createForm.confirmEmail;
+                        //model.password= createForm.password;
+                        //model.confirmPassword= createForm.confirmPassword;
+                        model.roleId= createForm.roleId;
+                        model.tenantId= createForm.tenantId
                         model.phoneNumber= createForm.phoneNumber;
-                      model.id = this.userId;
+                        model.id = this.selectCompany.id;
                       this.internalCompanyService.updateUser(model).subscribe(
                        (res) => {
                          this.toastr.success('User Updated Successfully.', 'Success!');
@@ -208,13 +256,32 @@ export class InternalCompanyListComponent {
         }
 
 
-        EditData(content, userId: string)
+        EditData(content, company: any)
         {
-            this.resetFrom();
-            this.userId = userId;
-            this.getCompanyById(userId, content);
-       }
+          this.isUpdate = true;
+          this.isEdit=true;
 
+          this.selectCompany = company;
+          debugger;
+          console.log(company);
+            //this.resetFrom();
+            this.EventValue ='Update';
+            this.UserForm.patchValue({
+             userName: company.userName,
+             firstName: company.firstName,
+             lastName:company.lastName,
+             email: company.email,
+             confirmEmail:company.email,
+             roleId:company.roleId,
+             tenantId:company.tenantId,
+             phoneNumber:company.phoneNumber,
+
+            });
+            this.modalService.open(content,{size:'md',backdrop:'static'});
+            // this.userId = userId;
+            // this.getCompanyById(userId, content);
+       }      
+       
        getCompanyById(userid: string, content) {
           
          this.internalCompanyService.GetUserById(userid).subscribe(
@@ -249,6 +316,7 @@ export class InternalCompanyListComponent {
           password : data.password,
           confirmPassword: data.confirmPassword,
           roleName : data.roleName,
+          organizationName:data.organizationName
 
         });
       }
