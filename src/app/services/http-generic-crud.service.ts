@@ -16,12 +16,15 @@ export class HttpGenericCrudService<T > {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${this._token}`
+                Authorization: `Bearer ${this._token}`,
+                
             })
         };
         return httpOptions;
     }
 
+
+  
     /*
      * This is error processing and handling
      */

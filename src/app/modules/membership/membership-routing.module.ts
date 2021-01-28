@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../services/_guards/auth-guard';
-//import { UsersManagementComponent } from './components/users-management/users-management.component';
+import { MemberSignUpComponent } from './components/membership.component';
 
 const routes: Routes = [
     {
       path: '',
       children: [
-       // {path: '', component: UsersManagementComponent}
+        {path: '', component: MemberSignUpComponent,canActivate: [AuthGuard]}
       ]
     }
   ];
@@ -16,4 +16,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class UsersManagementRoutingModule { }
+export class MembershipRoutingModule { }

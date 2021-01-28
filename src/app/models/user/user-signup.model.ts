@@ -3,5 +3,5 @@ export class UserSignUpModel {
   userName: string;
   password: string;
   confirmPassword: string;
-  token: string;
+  token:string;
 }

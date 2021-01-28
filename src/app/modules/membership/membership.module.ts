@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-//import { UsersManagementComponent } from './components/users-management/users-management.component';
-import { UsersManagementRoutingModule } from './users-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MemberSignUpComponent } from './components/membership.component';
+import { MembershipRoutingModule } from './membership-routing.module';
 
 @NgModule({
     declarations: [
-        //UsersManagementComponent
+        MemberSignUpComponent
     ],
     imports: [
         CommonModule,
-        UsersManagementRoutingModule,
+        MembershipRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         ToastrModule,
@@ -21,4 +21,4 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ],
     providers: []
 })
-export class UsersModule { }
+export class Membership { }

@@ -4,13 +4,14 @@ import { environment } from "../../../../environments/environment";
 import { BehaviorSubject } from "rxjs";
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AppUserModel } from "../../../models/app-user.model";
 import decode from 'jwt-decode';
 import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
 })
-export default class AuthenticationService {
+export default class AuthenticationService extends HttpGenericCrudService<AppUserModel>{
     errormessage = '';
     baseUrl = environment.API_URL;
     private readonly JWT_TOKEN = 'auth_token';
@@ -22,6 +23,12 @@ export default class AuthenticationService {
     constructor(httpClient: HttpClient,
         private jwtHelper: JwtHelperService,
         public router: Router) {
+        super(
+            httpClient,
+            environment.API_URL,
+            'user',
+        );
+
     }
 
     decodeToken() {
@@ -38,6 +45,9 @@ export default class AuthenticationService {
             return permissions.includes(permission);
         }
     }
+    login(data) {
+        return this.httpClient.post('user/authenticate', data);
+    }                                             
 
     isTokenExpired(token: string) {
         return this.jwtHelper.isTokenExpired(token);
@@ -49,6 +59,10 @@ export default class AuthenticationService {
 
     getRefreshToken() {
         return localStorage.getItem(this.Ref_TOKEN);
+    }
+
+    refreshToken(model) {
+        return this.httpClient.post('user/refresh-token', model);
     }
 
     clearStorageToken() {

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { match_value } from '../../../../services/_validators/confirmation.validator';
-import { UserRegistrationService } from '../../services/user-registration.service';
+import { ConfirmUserService } from '../../services/confirm-user.service';
 
 @Component({
     selector: 'app-confirmsignup',
@@ -16,11 +16,6 @@ export class ConfirmSignupComponent implements OnInit {
 
     /* Outputs */
 
-    /* Form Declarations */
-    userSignUpForm: FormGroup;
-    userName = new FormControl(null, [Validators.required]);
-    password = new FormControl(null, [Validators.required]);
-    confirmPassword = new FormControl(null, [Validators.required, match_value('password')]);
 
     /* Model Declarations*/
 
@@ -29,35 +24,33 @@ export class ConfirmSignupComponent implements OnInit {
     closeResult = ''; //close result for modal
     loginCheck: boolean;
     userId: string = '';
+    token: string ='';
     isTokenValid: boolean = false; //Form submission variable
 
     constructor(public fb: FormBuilder,
-        private registrationService: UserRegistrationService,
+        private ConfirmUserService: ConfirmUserService,
         private router: Router,
         private toastr: ToastrService,
         private route: ActivatedRoute,) {
     }
 
     ngOnInit() {
-        this.initializeSignUpForm();
-        
+        this.getValue();
     }
 
-    
-
-    /*
-     * Initialize Login Form
-     */
-    initializeSignUpForm() {
-        this.userSignUpForm = this.fb.group({
-            userName: this.userName,
-            password: this.password,
-            confirmPassword: this.confirmPassword
+    getValue() {
+        this.route.params.subscribe((params) => {
+            this.userId = params.uid;
+            this.token=params.token;
+            console.log(params);
+            this.ConfirmUserService.confirmUser(this.userId, this.token)
+                .subscribe(() => {
+                    this.isTokenValid = true;
+                }, error => {
+                    this.isTokenValid = false;
+                });
         });
-    }
 
-    onSubmit() {
-        const userSignUpForm = this.userSignUpForm.value;
         
     }
 
