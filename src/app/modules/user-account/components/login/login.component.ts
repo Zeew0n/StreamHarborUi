@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import AuthenticationService from '../../services/authentication.service';
+import { UserAuthResponseModel } from '../../../../models/user/user-auth-response.model';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +12,6 @@ import AuthenticationService from '../../services/authentication.service';
 
 export class LoginComponent implements OnInit {
     /* Inputs */
-    
 
     /* Outputs */
 
@@ -48,7 +48,21 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    
+    onSubmit() {
+       if (this.loginForm.valid) {
+        this.authenticationService.login(this.loginForm.value).subscribe(
+          (res: UserAuthResponseModel) => {
+              localStorage.clear();
+              localStorage.setItem('auth_token', res.jwToken);
+              localStorage.setItem('refresh_token', res.refreshToken);
+              this.toastr.success('Login Successful.', 'Success!');
+              this.router.navigateByUrl('home');
+          },
+          error => {
+              this.displayLoginErrorMessage(error);
+          });
+       }
+    }
 
     private displayLoginErrorMessage(error: any) {
         if (error.status === 401) {

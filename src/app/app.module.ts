@@ -28,11 +28,12 @@ import { AppLoginComponent } from './_layouts/app-login/app-login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ForgotPasswordComponent } from './modules/user-account/components/forgot-password/forgot-password.component';
 import { UserProfile } from './modules/profile/components/user-profile/user-profile.component';
-import {UsersManagementComponent } from './modules/users/components/users-management/users-management.component';
+//import { UsersManagement } from './modules/users/components/users-management/users-management.component';
 import { TenantSignupComponent } from './modules/tenantusers/components/tenantuserregistration.component';
 import { HomePageComponent } from './modules/home/components/home-page/home-page.component';
-import { ResetPasswordComponent } from './modules/user-account/components/reset-password/reset-password.component';
 import { ConfirmSignupComponent } from './modules/user-account/components/confirm-signup/confirm-signup.component';
+import { ResetPasswordComponent } from './modules/user-account/components/reset-password/reset-password.component';
+import { MembershipRoutingModule } from './modules/membership/membership-routing.module';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: 'red',
@@ -58,10 +59,10 @@ export function tokenGetter() {
     AppLoginComponent,
     ForgotPasswordComponent,
     TenantSignupComponent,
-    UsersManagementComponent,
-    ResetPasswordComponent,
     ConfirmSignupComponent,
+    ResetPasswordComponent,
 
+    //UsersManagement
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -77,6 +78,7 @@ export function tokenGetter() {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule,
     UserAccountModule,
+    //MembershipRoutingModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

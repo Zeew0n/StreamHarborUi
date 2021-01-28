@@ -6,10 +6,9 @@ import { ForgotPasswordComponent } from './modules/user-account/components/forgo
 import { SignupComponent } from './modules/user-account/components/signup/signup.component';
 import { HomePageComponent } from './modules/home/components/home-page/home-page.component';
 import { TenantSignupComponent } from './modules/tenantusers/components/tenantuserregistration.component';
-import { UsersManagementComponent } from './modules/users/components/users-management/users-management.component';
 import { ResetPasswordComponent } from './modules/user-account/components/reset-password/reset-password.component';
 import { ConfirmSignupComponent } from './modules/user-account/components/confirm-signup/confirm-signup.component';
-
+import { AuthGuard } from './services/_guards/auth-guard';
 export const routes: Routes = [
     { path: '', component: LoginPageComponent },
     { path: 'signup', component: SignupComponent },
@@ -26,24 +25,35 @@ export const routes: Routes = [
     },
 
     {
-        path: 'user',
-       component:UsersManagementComponent
-    },
-    {
         path: '',
         component: AppLayoutComponent,
         children: [
+            { path: '', component: HomePageComponent, pathMatch: 'full', canActivate: [AuthGuard] },
             {
                 path: 'home',
-                loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+                loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
+                canActivate: [AuthGuard] 
             },
             {
                 path: 'users-management',
-                loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+                loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),
+                canActivate: [AuthGuard] 
             },
             {
                 path: 'user-profile',
-                loadChildren: () => import('./modules/profile/profile.module').then(m => m.Profile)
+                loadChildren: () => import('./modules/profile/profile.module').then(m => m.Profile),
+                canActivate: [AuthGuard] 
+            },
+            {
+                path: 'user-list',
+                loadChildren: () => import('./modules/internalcompany/internal-company.module').then(m => m.InternalCompanyModule),
+                canActivate: [AuthGuard]
+            },
+
+            {
+                path: 'membership',
+                loadChildren: () => import('./modules/membership/membership.module').then(m => m.Membership),
+                canActivate: [AuthGuard]
             },
         ]
     },

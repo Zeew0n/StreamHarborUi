@@ -1,74 +1,46 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, } from '@angular/core';
+import { Component, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {
   NgbModal,
   ModalDismissReasons
 } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { UserListModel } from 'src/app/models/user/user-list.model';
-import { UserListService } from '../../services/userList.service';
 
 @Component({
-  selector: 'app-users-management',
+  selector: 'users-management',
   templateUrl: './users-management.component.html',
 })
+export class UsersManagement {
 
-export class UsersManagementComponent implements OnInit{
+
   // Modal Declarations
-  closeResult = ''; // close result for modal
+  closeResult = ''; //close result for modal  
   title = [];
-  city = [];
-  state = [];
-  userList: UserListModel[];
-
-  // Constructor
+  city =[];
+  state =[];
+  //Constructor
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private toastr: ToastrService,
-    private httpClient: HttpClient,
-    private userListService: UserListService
-  ) {}
+    private toastr: ToastrService) {
+  }
 
-  // ngOnInit
+  //ngOnInit
   ngOnInit() {
-    // this.title = ['Chief Product Officer', 'CTO', 'CEO'];
-    // this.city = ['Salt Lake City'];
-    // this.state=['UT']
-   this.getallusers();
-
+    this.title = ['Chief Product Officer', 'CTO', 'CEO'];
+    this.city = ['Salt Lake City'];
+    this.state=['UT']
   }
 
-  getallusers() {
 
-    this.userListService.getAllUsers().subscribe(
-      (res: Array<UserListModel>) => {
-        this.userList = res;
-        console.log(this.userList)
-      },
-      error => {
-        this.toastr.error(error.error.errormessage !== undefined ?
-          error.error.errormessage : 'user create failed', 'error!');
-      });
-  }
 
-  // Modal Open and Dismiss
+  //Modal Open and Dismiss
   open(content) {
-    this.modalService
-      .open(content, {
-        ariaLabelledBy: 'modal-basic-title',
-        windowClass: 'modal-harbor',
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', windowClass: 'modal-harbor' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   private getDismissReason(reason: any): string {

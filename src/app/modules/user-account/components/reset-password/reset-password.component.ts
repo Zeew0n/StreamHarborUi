@@ -12,6 +12,8 @@ import { ForgetPasswordService } from '../../services/forget-password.service';
     templateUrl: './reset-password.component.html'
 })
 
+//This is comment
+
 export class ResetPasswordComponent implements OnInit {
     /* Inputs */
 
@@ -78,6 +80,7 @@ export class ResetPasswordComponent implements OnInit {
         });
     }
     
+
 
     onSubmit() {
         const userSignUpForm = this.UpdatePasswordForm.value;

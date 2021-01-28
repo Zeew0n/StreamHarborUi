@@ -1,24 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InternalCompanyRoutingModule,internalComList } from './internal-company-routing.module';
 import { ToastrModule } from 'ngx-toastr';
-//import { UsersManagementComponent } from './components/users-management/users-management.component';
-import { UsersManagementRoutingModule } from './users-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-    declarations: [
-        //UsersManagementComponent
-    ],
     imports: [
         CommonModule,
-        UsersManagementRoutingModule,
+        InternalCompanyRoutingModule,
         FormsModule,
+        NgSelectModule,
         ReactiveFormsModule,
         ToastrModule,
-        NgSelectModule
     ],
+    declarations: [ internalComList],
     providers: []
 })
-export class UsersModule { }
+export class InternalCompanyModule { }
