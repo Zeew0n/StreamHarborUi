@@ -9,19 +9,34 @@
         Home <span class="sr-only">(current)</span>
       </a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="['/a']" routerLinkActive="active">
         <i class="icon icon-folder-opened"></i>
         Organization Management
       </a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="!hasPermission">
       <a class="nav-link" [routerLink]="['/tenant-management']" routerLinkActive="active">
         <i class="icon icon-user"></i>
       Tenant Management
       </a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/tenant-admin']" routerLinkActive="active">
+        <i class="icon icon-user"></i>
+        Tenant Admin List
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/tenantuserlist']" routerLinkActive="active">
+        <i class="icon icon-user"></i>
+        Tenant User List
+      </a>
+    </li>
+
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/user-list']" routerLinkActive="active">
@@ -30,25 +45,27 @@
       </a>
     </li>
 
-    <li class="nav-item">
+
+
+    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="['/membership']" routerLinkActive="active">
         <i class="icon icon-user"></i>
         Membership
       </a>
-    </li>
+    </li> -->
 
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="['/c']" routerLinkActive="active">
         <i class="icon icon-database"></i>
         Harbor Management
       </a>
-    </li>
-    <li class="nav-item">
+    </li> -->
+    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="['/d']" routerLinkActive="active">
         <i class="icon icon-bar-chart"></i>
         Analytics
       </a>
-    </li>    
+    </li>     -->
   </ul>
 </nav>
