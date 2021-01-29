@@ -15,30 +15,23 @@
         Organization Management
       </a>
     </li> -->
-
-    <li class="nav-item" *ngIf="!hasPermission">
+    <!-- *ngIf="hasSuperAdmin" -->
+    <li class="nav-item" >
       <a class="nav-link" [routerLink]="['/tenant-management']" routerLinkActive="active">
         <i class="icon icon-user"></i>
       Tenant Management
       </a>
     </li>
-
-    <li class="nav-item">
+    <!-- *ngIf="hasSuperAdmin" -->
+    <li class="nav-item" >
       <a class="nav-link" [routerLink]="['/tenant-admin']" routerLinkActive="active">
         <i class="icon icon-user"></i>
         Tenant Admin List
       </a>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/tenantuserlist']" routerLinkActive="active">
-        <i class="icon icon-user"></i>
-        Tenant User List
-      </a>
-    </li>
 
-
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="hasUser||hasAdmin">
       <a class="nav-link" [routerLink]="['/user-list']" routerLinkActive="active">
         <i class="icon icon-user"></i>
         User Management

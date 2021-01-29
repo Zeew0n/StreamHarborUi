@@ -40,7 +40,7 @@ export default class AuthenticationService extends HttpGenericCrudService<AppUse
     }
 
     checkPermission(user): boolean {
-        if (user=="User") {
+        if (user=="User"||user=="Admin") {
             return true;
         } else {
            false;
@@ -49,6 +49,11 @@ export default class AuthenticationService extends HttpGenericCrudService<AppUse
     login(data) {
         return this.httpClient.post('user/authenticate', data);
     }                                             
+
+    logintenant(data) {
+        return this.httpClient.post('user/authenticatetenant', data);
+    }   
+
 
     isTokenExpired(token: string) {
         return this.jwtHelper.isTokenExpired(token);

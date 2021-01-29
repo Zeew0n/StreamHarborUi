@@ -27,10 +27,13 @@ export class InternalCompanyService extends HttpGenericCrudService<InternalCompa
         return httpOptions;
     }
 
+    private readonly Ref_TENANTID = 'tenant_id';
+
+
+    tenantId = localStorage.getItem(this.Ref_TENANTID);
 
     GetAllUsers(): Observable<InternalCompanyModel[]> {
-        return this.httpClient.get<InternalCompanyModel[]>('user/listallusers');
-    }
+        return this.httpClient.get<InternalCompanyModel[]>('user/listallusers?tenantId='+this.tenantId)}
 
 
     GetAllRoles(): Observable<RoleModel[]> {
