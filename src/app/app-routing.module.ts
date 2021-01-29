@@ -9,8 +9,10 @@ import { TenantSignupComponent } from './modules/tenantusers/components/tenantus
 import { ResetPasswordComponent } from './modules/user-account/components/reset-password/reset-password.component';
 import { ConfirmSignupComponent } from './modules/user-account/components/confirm-signup/confirm-signup.component';
 import { AuthGuard } from './services/_guards/auth-guard';
+import { TenantLoginComponent } from './modules/user-account/components/tenantlogin/tenantlogin.component';
 export const routes: Routes = [
     { path: '', component: LoginPageComponent },
+    { path: 'tenantlogin', component: TenantLoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'tenant', component: TenantSignupComponent },

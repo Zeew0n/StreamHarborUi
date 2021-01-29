@@ -13,7 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 
 export class SideNavComponent {
 
-    hasPermission: boolean = false;
+    hasUser: boolean = true;
+    hasAdmin: boolean = false;
+    hasSuperAdmin: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -26,20 +28,27 @@ export class SideNavComponent {
          private checkPermissions() {
             const role = this.authService.getUserRole();
 
-            if (this.checkPermission(role)) {
-              this.hasPermission = true;
+            if (role=="User") {
+              this.hasUser = true;
             } else {
-              this.hasPermission = false;
+              this.hasUser = false;
             }
+            if (role=="Admin") {
+                this.hasAdmin = true;
+              } else {
+                this.hasAdmin = false;
+              }
+
+              if (role=="SuperAdmin") {
+                this.hasSuperAdmin = true;
+              } else {
+                this.hasSuperAdmin = false;
+              }
           }
     
           private checkPermission(user): boolean {
             return this.authService.checkPermission(user);
           }
-
-
-
-    hasEditPermission: boolean = false;
 
 
 

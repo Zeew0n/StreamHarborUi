@@ -1,7 +1,9 @@
 <div class="container">
   <div class="title-container">
     <h1 class="page-title">Users</h1>
-    <div class="btn-holder">
+
+    <!-- *ngIf="hasAdmin" -->
+    <div class="btn-holder" >
       <button type="button" class="btn btn-primary" (click)="open(content)">
         Add Users
       </button>
@@ -19,6 +21,8 @@
               <th scope="col">Phone Number</th>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -30,12 +34,14 @@
               <td data-th="CreateDate ">{{company.phoneNumber}}</td>
               <td data-th="Company Name">{{company.firstName}}</td>
               <td data-th="IsActive ">{{company.lastName}}</td>
+              <td data-th="IsActive ">{{company.role}}</td>
+              <td data-th="IsActive ">{{company.status}}</td>
               <td data-th="Actions">
-                <a (click)="EditData(content, company)"  class="icon-holder" href="javascript:void(0)" title="edit"><i
+                <a (click)="EditData(content, company)"  class="icon-holder" *ngIf="hasAdmin" href="javascript:void(0)" title="edit"><i
                     class="icon icon-pencil-create"></i></a>
-                <span>|</span>
+                <span *ngIf="hasAdmin">|</span>
                 <a class="icon-holder" (click)="Delete(company.id)" href="javascript:void(0)" title="delete"><i
-                    class="icon icon-circle-block"></i></a>
+                    class="icon icon-circle-block" *ngIf="hasAdmin"></i></a>
               </td>
             </tr>
           </tbody>
@@ -116,7 +122,7 @@
               <select formControlName="roleId" class="form-control" (change)="changerole($event)">
                 <option disabled>Select Role</option>
              
-                <option *ngFor="let role of roles" value ={{role.roleId}}>{{role.roleName}}</option>
+                <option *ngFor="let role of roles" value={{role.roleId}}>{{role.roleName}}</option>
               </select>
             </div>
 

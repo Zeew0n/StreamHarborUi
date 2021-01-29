@@ -29,7 +29,7 @@ export class TenantAdminService extends HttpGenericCrudService<InternalCompanyMo
 
 
     GetAllUsers(): Observable<InternalCompanyModel[]> {
-        return this.httpClient.get<InternalCompanyModel[]>('user/listallusers');
+        return this.httpClient.get<InternalCompanyModel[]>('user/listalladmins');
     }
 
 

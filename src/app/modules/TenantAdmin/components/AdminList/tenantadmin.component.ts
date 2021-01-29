@@ -315,7 +315,7 @@ export class TenantAdminListComponent {
           phoneNumber : data.phoneNumber,
           password : data.password,
           confirmPassword: data.confirmPassword,
-          roleName : data.roleName,
+          roleName : data.role,
           organizationName:data.organizationName
 
         });

@@ -56,7 +56,9 @@ export class InternalCompanyListComponent {
         //isActive: boolean;
         //updatedDate: Date;
         //createdDate: Date;
-
+        hasUser: boolean = false;
+        hasAdmin: boolean = false;
+        hasSuperAdmin: boolean = false;
 
         userName = new FormControl();
         firstName = new FormControl('', [Validators.required]);
@@ -76,6 +78,27 @@ export class InternalCompanyListComponent {
         this.getRoles();
         this.getTenants();
         //this.simpleItems = ['User', 'Admin'];
+    }
+
+    private checkPermissions() {
+      const role = this.authService.getUserRole();
+
+      if (role=="User") {
+        this.hasUser = true;
+      } else {
+        this.hasUser = false;
+      }
+      if (role=="Admin") {
+          this.hasAdmin = true;
+        } else {
+          this.hasAdmin = false;
+        }
+
+        if (role=="SuperAdmin") {
+          this.hasSuperAdmin = true;
+        } else {
+          this.hasSuperAdmin = false;
+        }
     }
 
     
@@ -272,7 +295,7 @@ export class InternalCompanyListComponent {
              lastName:company.lastName,
              email: company.email,
              confirmEmail:company.email,
-             roleId:company.roleId,
+             roleId:company.role,
              tenantId:company.tenantId,
              phoneNumber:company.phoneNumber,
 
@@ -315,7 +338,7 @@ export class InternalCompanyListComponent {
           phoneNumber : data.phoneNumber,
           password : data.password,
           confirmPassword: data.confirmPassword,
-          roleName : data.roleName,
+          roleName : data.role,
           organizationName:data.organizationName
 
         });
